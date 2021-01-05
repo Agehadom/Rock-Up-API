@@ -1,0 +1,21 @@
+{
+  "name": "back-end-self-practice",
+  "version": "1.0.0",
+  "description": "Rocket API for Rocket Up",
+  "main": "server.js",
+  "dependencies": {
+    "bcrypt": "^5.0.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.11.10",
+    "node-gyp": "^7.1.2",
+    "nodemon": "^2.0.6",
+    "passport-http-bearer": "^1.0.1",
+    "passport": "^0.4.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Dom",
+  "license": "ISC"
+}
