@@ -10,7 +10,7 @@ const bcrypt = require('bcrypt')
 const bcryptSaltRounds = 10
 
 // pull in error types and the logic to handle them and set status codes
-const errors = require('../../lib/custom_errors')
+const errors = require('./../lib/custom_errors')
 
 const BadParamsError = errors.BadParamsError
 const BadCredentialsError = errors.BadCredentialsError
@@ -29,7 +29,7 @@ const router = express.Router()
 // POST /sign-up
 router.post('/sign-up', (req, res, next) => {
   // start a promise chain, so that any errors will pass to `handle`
-  Promise.resolve(req.body.credentials)
+  User.resolve(req.body.credentials)
     // reject any requests where `credentials.password` is not present, or where
     // the password is an empty string
     .then(credentials => {
