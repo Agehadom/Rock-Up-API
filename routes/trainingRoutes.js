@@ -38,7 +38,7 @@ router.get('/training', requireToken, (req, res, next) => {
       return Trainings.map(Training => Training.toObject())
     })
     // respond with status 200 and JSON of the Trainings
-    .then(Trainings => res.status(200).json({ Trainings: Trainings }))
+    .then(Trainings => res.status(200).json({ trainings: Trainings }))
     // if an error occurs, pass it to the handler
     .catch(next)
 })
@@ -50,7 +50,7 @@ router.get('/training/:id', requireToken, (req, res, next) => {
   Training.find({ _id: req.params.id, owner: req.user._id })
     .then(handle404)
     // if `findById` is succesful, respond with 200 and "Training" JSON
-    .then(Training => res.status(200).json({ Training: Training }))
+    .then(Training => res.status(200).json({ training: Training }))
     // if an error occurs, pass it to the handler
     .catch(next)
 })
@@ -59,12 +59,12 @@ router.get('/training/:id', requireToken, (req, res, next) => {
 // POST /Trainings
 router.post('/training', requireToken, (req, res, next) => {
   // set owner of new Training to be current user
-  req.body.Training.owner = req.user.id
+  req.body.training.owner = req.user.id
 
-  Training.create(req.body.Training)
+  Training.create(req.body.training)
     // respond to succesful `create` with status 201 and JSON of new "Training"
     .then(Training => {
-      res.status(201).json({ Training: Training.toObject() })
+      res.status(201).json({ training: Training.toObject() })
     })
     // if an error occurs, pass it off to our error handler
     // the error handler needs the error message and the `res` object so that it
@@ -77,7 +77,7 @@ router.post('/training', requireToken, (req, res, next) => {
 router.patch('/training/:id', requireToken, removeBlanks, (req, res, next) => {
   // if the client attempts to change the `owner` property by including a new
   // owner, prevent that by deleting that key/value pair
-  delete req.body.Training.owner
+  delete req.body.training.owner
 
   Training.findById(req.params.id)
     .then(handle404)
@@ -87,7 +87,7 @@ router.patch('/training/:id', requireToken, removeBlanks, (req, res, next) => {
       requireOwnership(req, Training)
 
       // pass the result of Mongoose's `.update` to the next `.then`
-      return Training.updateOne(req.body.Training)
+      return Training.updateOne(req.body.training)
     })
     // if that succeeded, return 204 and no JSON
     .then(() => res.sendStatus(204))
