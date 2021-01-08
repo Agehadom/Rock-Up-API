@@ -1,4 +1,4 @@
-API="http://localhost:4741"
+API="https://serene-bastion-18925.herokuapp.com"
 URL_PATH="/sign-up"
 
 curl "${API}${URL_PATH}" \
