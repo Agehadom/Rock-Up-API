@@ -31,14 +31,14 @@ const router = express.Router()
 // GET /Trainings
 router.get('/training', requireToken, (req, res, next) => {
   Training.find()
-    .then(Trainings => {
+    .then(trainings => {
       // `Trainings` will be an array of Mongoose documents
       // we want to convert each one to a POJO, so we use `.map` to
       // apply `.toObject` to each one
-      return Trainings.map(Training => Training.toObject())
+      return trainings.map(training => training.toObject())
     })
     // respond with status 200 and JSON of the Trainings
-    .then(Trainings => res.status(200).json({ trainings: Trainings }))
+    .then(trainings => res.status(200).json({ trainings: trainings }))
     // if an error occurs, pass it to the handler
     .catch(next)
 })
@@ -50,7 +50,7 @@ router.get('/training/:id', requireToken, (req, res, next) => {
   Training.find({ _id: req.params.id, owner: req.user._id })
     .then(handle404)
     // if `findById` is succesful, respond with 200 and "Training" JSON
-    .then(Training => res.status(200).json({ training: Training }))
+    .then(training => res.status(200).json({ training: training }))
     // if an error occurs, pass it to the handler
     .catch(next)
 })
@@ -63,8 +63,8 @@ router.post('/training', requireToken, (req, res, next) => {
 
   Training.create(req.body.training)
     // respond to succesful `create` with status 201 and JSON of new "Training"
-    .then(Training => {
-      res.status(201).json({ training: Training.toObject() })
+    .then(training => {
+      res.status(201).json({ training: training.toObject() })
     })
     // if an error occurs, pass it off to our error handler
     // the error handler needs the error message and the `res` object so that it
@@ -81,13 +81,13 @@ router.patch('/training/:id', requireToken, removeBlanks, (req, res, next) => {
 
   Training.findById(req.params.id)
     .then(handle404)
-    .then(Training => {
+    .then(training => {
       // pass the `req` object and the Mongoose record to `requireOwnership`
       // it will throw an error if the current user isn't the owner
-      requireOwnership(req, Training)
+      requireOwnership(req, training)
 
       // pass the result of Mongoose's `.update` to the next `.then`
-      return Training.updateOne(req.body.training)
+      return training.updateOne(req.body.training)
     })
     // if that succeeded, return 204 and no JSON
     .then(() => res.sendStatus(204))
@@ -100,11 +100,11 @@ router.patch('/training/:id', requireToken, removeBlanks, (req, res, next) => {
 router.delete('/training/:id', requireToken, (req, res, next) => {
   Training.findById(req.params.id)
     .then(handle404)
-    .then(Training => {
+    .then(training => {
       // throw an error if current user doesn't own `Training`
-      requireOwnership(req, Training)
+      requireOwnership(req, training)
       // delete the Training ONLY IF the above didn't throw
-      Training.deleteOne()
+      training.deleteOne()
     })
     // send back 204 and no content if the deletion succeeded
     .then(() => res.sendStatus(204))

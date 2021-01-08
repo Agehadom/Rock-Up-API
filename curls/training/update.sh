@@ -9,10 +9,10 @@ curl "${API}${URL_PATH}/${ID}" \
   --header "Content-Type: application/json" \
   --header "Authorization: Bearer ${TOKEN}" \
   --data '{
-    "practice": {
-      "name": "'"${name}"'",
-      "type": "'"${type}"'",
-      "difficulty": "'"${difficulty}"'"
+    "training": {
+      "name": "'"${NAME}"'",
+      "type": "'"${TYPE}"'",
+      "difficulty": "'"${DIFFICULTY}"'"
     }
   }'
 
