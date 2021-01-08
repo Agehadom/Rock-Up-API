@@ -1,6 +1,6 @@
 #!/bin/sh
 
-API="http://localhost:4741"
+API="https://serene-bastion-18925.herokuapp.com"
 URL_PATH="/training"
 
 curl "${API}${URL_PATH}/${ID}" \
