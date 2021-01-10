@@ -29,7 +29,7 @@ const router = express.Router()
 
 // INDEX
 // GET /Trainings
-router.get('/training', requireToken, (req, res, next) => {
+router.get('/training', (req, res, next) => {
   Training.find()
     .then(trainings => {
       // `Trainings` will be an array of Mongoose documents
@@ -43,9 +43,9 @@ router.get('/training', requireToken, (req, res, next) => {
     .catch(next)
 })
 
-// SHOW
+// SEARCH
 // GET /Trainings/:id
-router.get('/training/:id', requireToken, (req, res, next) => {
+router.get('/training/:id', (req, res, next) => {
   // req.params.id will be set based on the `:id` in the route
   Training.find({ _id: req.params.id, owner: req.user._id })
     .then(handle404)
