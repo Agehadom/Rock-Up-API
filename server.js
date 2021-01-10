@@ -64,7 +64,7 @@ app.use(userRoutes)
 // passed any error messages from them
 app.use(errorHandler)
 
-//app.use(express.static('public'))
+app.use(express.static('public'))
 
 // run API on designated port (4741 in this case)
 app.listen(port, () => {
