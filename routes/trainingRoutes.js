@@ -47,7 +47,7 @@ router.get('/training', (req, res, next) => {
 // GET /Trainings/:id
 router.get('/training/:id', (req, res, next) => {
   // req.params.id will be set based on the `:id` in the route
-  Training.find({ _id: req.params.id })
+  Training.find({ $or: [{ _id: req.params.id }, { type: req.params.type }] })
     .then(handle404)
     // if `findById` is succesful, respond with 200 and "Training" JSON
     .then(training => res.status(200).json({ training: training }))
